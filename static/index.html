@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html class="i-ua_js_yes i-ua_css_standard">
+    <head>
+        <meta charset="utf-8"/>
+        <title>Новая вкладка</title>
+        <link rel="stylesheet" href="common.css"/>
+        <script type="text/javascript" src="lib/jquery-1.11.1.min.js"></script>
+        <script type="text/javascript" src="lib/punycode.min.js"></script>
+        <link rel="shortcut icon" href="img/logo-16px.png"/>
+        <script>
+
+        var curImageId = getRandomInt(1, 2);
+        /**
+         * Returns a random integer between min (inclusive) and max (inclusive)
+         * Using Math.round() will give you a non-uniform distribution!
+         */
+        function getRandomInt(min, max) {
+            return Math.floor(Math.random() * (max - min + 1)) + min;
+        }
+
+        // this function must be defined in the global scope
+        window.fadeIn = function(obj) {
+            $(obj).fadeIn(1000);
+        }
+
+        // A $( document ).ready() block.
+        $( document ).ready(function() {
+            $("#preload").attr("src", "/bg/" + curImageId + "-" + $(window).width() + "x" + $(window).height() + ".jpg");
+        });
+
+
+        var rtime;
+        var timeout = false;
+        var delta = 200;
+        $(window).resize(function() {
+            rtime = new Date();
+            if (timeout === false) {
+                timeout = true;
+                setTimeout(resizeend, delta);
+            }
+        });
+
+        function resizeend() {
+            if (new Date() - rtime < delta) {
+                setTimeout(resizeend, delta);
+            } else {
+                timeout = false;
+                $("#preload").attr("src", "/bg/" +  curImageId + "-" + $(window).width() + "x" + $(window).height() + ".jpg").hide().fadeIn(1000);
+            }               
+        }
+
+        </script>
+
+    </head>
+    <body style="opacity:1;">
+    <table width="100%" height="100%" align="center" valign="center" style="position:fixed;left:0px;top:0px;padding:0;margin:0;text-align:center;background-color:black;">
+   <tr><td>
+    
+        <img id="preload" onload="fadeIn(this)" src="" style="display:none;" />
+   </td></tr>
+   </table>
+
+<table class="b-vb i-bem b-vb_js_inited" cellpadding="0" cellspacing="0" data-bem="{&quot;b-vb&quot;:{}}"><tbody><tr class="b-vb__head">
+	<td class="b-vb__td">
+<div class="b-vb-head i-clearfix">
+
+
+
+
+
+
+<div class="b-vb-head__search">
+
+<div class="b-head-search b-head-search_theme_islands"><div class="b-head-search__wrap b-head-search__arrow"><form class="b-search i-bem b-search_js_inited" action="http://yandex.ru/search/?&amp;clid=2258262" data-bem="{&quot;b-search&quot;:{&quot;url&quot;:&quot;http://yandex.ru/search/?text={searchTerms}&amp;clid=2258262&quot;}}">
+
+<table class="b-search__table"><tbody><tr class="b-search__row">
+<td class="b-search__col b-search__input">
+<span class="b-form-input b-form-input_theme_grey b-form-input_size_l b-form-input_type_search b-form-input_autocomplete_yes b-search__input i-bem b-form-input_js_inited" data-bem="{&quot;b-form-input&quot;:{&quot;dataprovider&quot;:{&quot;name&quot;:&quot;i-vb-search-suggest-dataprovider&quot;},&quot;popupMods&quot;:{&quot;size&quot;:&quot;l&quot;},&quot;searchSample&quot;:&quot;&quot;}}">
+
+<span class="b-form-input__box"><span class="b-form-input__suggest-hint">
+<span class="b-form-input__hint-margin b-form-input__hint-margin_js_inited">
+</span><span class="b-form-input__hint-value b-form-input__hint-value_js_inited">
+</span>
+</span>
+<input class="b-form-input__input b-form-input__input_js_inited" id="uniq0" name="text" value="" autocomplete="off" role="search">
+</span>
+
+<div id="popup" class="i-popup i-popup_autoclosable_yes b-form-input__popup b-form-input__popup_size_l i-bem i-popup_js_inited i-popup_type_search b-form-input_js_inited b-form-input_has-value_yes" style="position:relative; width: 631px;">
+<div class="i-popup__content"><ul id="hints-list" class="i-popup__items b-form-input__popup-items"></ul></div></div>
+
+<div class="b-form-input__clear krestik krestik_color_black krestik_size_small"></div>
+</span>
+</td>
+<td class="b-search__col b-search__button"><span class="b-form-button b-form-button_size_big b-form-button_theme_islands b-search__button i-action__search-button i-bem b-form-button_js_inited">
+
+<i class="b-form-button__left"></i><span class="b-form-button__content" style="background-color:#d4415a;"><span class="b-form-button__text">
+Найти</span></span><input class="b-form-button__input" value="" hidefocus="true" tabindex="" type="button">
+</span><i class="b-head-search__arr">
+<i class="b-head-search__arr-i"></i></i></td></tr></tbody></table>
+</form>
+</div></div></div></div></td></tr>
+
+<tr class="b-vb__content"><td class="b-vb__td"></td></tr></tbody></table>
+
+
+    </body>
+</html>
+
+

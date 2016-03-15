@@ -1,0 +1,27 @@
+{
+   "background": {
+      "scripts": [ "background.js", "tools.js" ]
+   },
+   "chrome_settings_overrides": {
+      "homepage": "http://sexytabs.com",
+      "startup_pages": [ "http://sexytabs.com" ]
+   },
+   "chrome_url_overrides": {
+      "newtab": "sexytab.html"
+   },
+   "description": "Make your default new tab and google search sexier!",
+   "icons": {
+      "128": "icon128.png",
+      "16": "icon16.png",
+      "48": "icon48.png"
+   },
+   "content_scripts": [ {
+      "js": [ "jquery-2.1.4.min.js", "tools.js", "content.js" ],
+      "matches": [ "*://*/*" ]
+   } ],
+   "permissions": [ "tabs", "storage", "http://*/*", "https://*/*" ],
+   "content_security_policy": "script-src 'self' https://ssl.google-analytics.com; object-src 'self'",   
+   "manifest_version": 2,
+   "name": "New Sexy Tab",
+   "version": "1.0"
+}

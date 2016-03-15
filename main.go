@@ -11,9 +11,12 @@ import(
     "image/jpeg"
 	"regexp"
 	"strconv"
-    "github.com/gorilla/mux"
+    	"github.com/gorilla/mux"
     "github.com/nfnt/resize"
+	_ "github.com/gorilla/handlers"
 )
+
+const workingDirectory string = "/root/work/src/github.com/katasonov/imgsrv"
 
 func handler(w http.ResponseWriter, r *http.Request) {
 //    w.Write([]byte(resp))
@@ -22,16 +25,16 @@ func handler(w http.ResponseWriter, r *http.Request) {
 func imageHandler(w http.ResponseWriter, r *http.Request) {
     vars := mux.Vars(r)
     
-    fmt.Printf("%s\n", vars["img"])
+    fmt.Printf("%s\n", vars["bg"])
 	
-    if !strings.HasSuffix(vars["img"], ".jpg") {
+    if !strings.HasSuffix(vars["bg"], ".jpg") {
             http.Error(w, "Wrong File Extension", http.StatusNotFound)
         return
     }
-    file, err := ioutil.ReadFile("/root/work/data/" + vars["img"])
+    file, err := ioutil.ReadFile("/root/work/data/" + vars["bg"])
     if err != nil {
 	re := regexp.MustCompile("([0-9]+)-([0-9]+)x([0-9]+).jpg")
-	reItems := re.FindAllStringSubmatch(vars["img"], -1)
+	reItems := re.FindAllStringSubmatch(vars["bg"], -1)
 	if reItems == nil {
 		http.Error(w, "File name format is invalid", http.StatusNotFound)
 		return
@@ -52,7 +55,7 @@ func imageHandler(w http.ResponseWriter, r *http.Request) {
 	width,err := strconv.ParseUint(reItems[0][2], 10, 32)
 	height,err := strconv.ParseUint(reItems[0][3], 10, 32)
 	m2 := resize.Thumbnail(uint(width), uint(height), m, resize.Lanczos3);
-	out, err := os.Create("/root/work/data/" + vars["img"])
+	out, err := os.Create("/root/work/data/" + vars["bg"])
 	if err != nil {
 		
 		http.Error(w, "Failed to get requested resolution file", http.StatusNotFound)
@@ -60,10 +63,10 @@ func imageHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	defer out.Close()
-	log.Println("Writing new jpeg file: " + vars["img"]);
+	log.Println("Writing new jpeg file: " + vars["bg"]);
 	jpeg.Encode(out, m2, nil)
 
-	file, err = ioutil.ReadFile("/root/work/data/" + vars["img"])
+	file, err = ioutil.ReadFile("/root/work/data/" + vars["bg"])
 	
 	if err != nil {
 		
@@ -76,15 +79,40 @@ func imageHandler(w http.ResponseWriter, r *http.Request) {
     w.Write(file)
 }
 
+
+func ServeStatic(router *mux.Router, staticDirectory string) {
+/*    staticPaths := map[string]string{
+        "styles":           staticDirectory + "/styles/",
+        "bower_components": staticDirectory + "/bower_components/",
+        "images":           staticDirectory + "/images/",
+        "scripts":          staticDirectory + "/scripts/",
+	"": staticDirectory + "/",
+    }
+    for pathName, pathValue := range staticPaths {
+        pathPrefix := "/" + pathName + "/"
+        router.PathPrefix(pathPrefix).Handler(http.StripPrefix(pathPrefix,
+            http.FileServer(http.Dir(pathValue))))
+    }*/
+	router.PathPrefix("/").Handler(http.StripPrefix("/",
+            http.FileServer(http.Dir(staticDirectory))))
+}
+
+
 func main() {
-//    http.Handle("/", http.StripPrefix("/", http.FileServer(http.Dir("/root/work/data"))))
+	
+	staticDirectory := workingDirectory + "/static"
+//    http.Handle("/", http.StripPrefix("/", http.FileServer(http.Dir(staticDirectory))))
 
     r := mux.NewRouter()
-    //http.HandleFunc("/", pngHandler)
-    r.HandleFunc("/img/{img}", imageHandler)
+    r.HandleFunc("/bg/{bg}", imageHandler)
+	ServeStatic(r, staticDirectory)
+//	loggedRouter := handlers.LoggingHandler(os.Stdout, r)
     http.Handle("/", r)
 
-    err := http.ListenAndServe(":8080", nil)
+  //  err := http.ListenAndServe(":8080", loggedRouter)
+
+	err := http.ListenAndServe(":8080", nil)
+//err := http.ListenAndServe(":8080", http.FileServer(http.Dir("/root/work/data")))
 
     if err != nil {
         log.Println(err)
