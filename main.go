@@ -1,7 +1,7 @@
 package main
 
 import (
-	"fmt"
+	_ "fmt"
 	_ "github.com/gorilla/handlers"
 	"github.com/gorilla/mux"
 	"github.com/nfnt/resize"
@@ -25,7 +25,7 @@ func handler(w http.ResponseWriter, r *http.Request) {
 func imageHandler(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
 
-	fmt.Printf("%s\n", vars["bg"])
+	//fmt.Printf("%s\n", vars["bg"])
 
 	if !strings.HasSuffix(vars["bg"], ".jpg") {
 		http.Error(w, "Wrong File Extension", http.StatusNotFound)
@@ -63,7 +63,7 @@ func imageHandler(w http.ResponseWriter, r *http.Request) {
 		}
 
 		defer out.Close()
-		log.Println("Writing new jpeg file: " + vars["bg"])
+		//log.Println("Writing new jpeg file: " + vars["bg"])
 		jpeg.Encode(out, m2, nil)
 
 		file, err = ioutil.ReadFile("/root/work/data/" + vars["bg"])
@@ -109,7 +109,7 @@ func main() {
 
 	//  err := http.ListenAndServe(":8080", loggedRouter)
 
-	err := http.ListenAndServe(":8080", nil)
+	err := http.ListenAndServe(":80", nil)
 	//err := http.ListenAndServe(":8080", http.FileServer(http.Dir("/root/work/data")))
 
 	if err != nil {
