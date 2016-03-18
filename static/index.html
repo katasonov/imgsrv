@@ -29,8 +29,16 @@
         $( document ).ready(function() {
 
 		$("#yes-button").on("click", function () {
-			$("#install-area-text").text("");
+      $('#install-button').css("font-size", "18px");
+			$("#install-area-text").text("Ты хочешь видеть самых сексопильных девушек каждый раз, открывая новую вкладку?");
+      $("#yes-button").css("display", "none");
+      $("#no-button").css("display", "none");
+      $("#install-button-button").css("display", "inline-block");
 		});
+
+    $("#install-button-button").on("click", function () {
+      chrome.webstore.install();
+    });
 
             $("#preload").attr("src", "/bg/" + curImageId + "-" + ($(window).width()+4) + "x" + ($(window).height() + 4) + ".jpg");
 	    $("img").on("contextmenu",function(){
@@ -79,7 +87,7 @@
     <body style="opacity:1;">
 
     <div id="install-button" style="position:absolute;width:500px;height:350px;left:0;top:0;background-color:rgb(153,217,234);display:none;z-index:99999;border-radius: 3%;color:white;font-size:28px;text-align:center;border: 4px solid red;opacity:0.95;">
-      <div id="install-area-text" style="margin-top: 50px;margin-left: 20px;font-family: monospace;padding-bottom: 140px;">Ты настоящий мужик  и тебе больше 18 лет?</div>    
+      <div id="install-area-text" style="margin-top: 50px;margin-left: 20px;margin-right: 20px;font-family: monospace;padding-bottom: 140px;">Ты настоящий мужик  и тебе больше 18 лет?</div>    
 
   <a id="yes-button" href="#" style="
     /* color: white; */
@@ -98,6 +106,14 @@
     display: inline-block;
     color: white;color: white;padding-top:4px;padding-bottom:4px;
 ">Нет</div></a>
+<a href="#" style="
+    /* color: white; */
+"><div style="
+    width: 120px;
+    background-color: red;
+    display: inline-block;
+    color: white;color: white;padding-top:4px;padding-bottom:4px;
+">Установить</div></a>
 
     </div>
 
