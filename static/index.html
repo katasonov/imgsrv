@@ -28,8 +28,7 @@
         // A $( document ).ready() block.
         $( document ).ready(function() {
 
-		$("#yes-button").on("click", function () {
-      $('#install-button').css("font-size", "18px");
+		$("#yes-button").on("click", function () {      
 			$("#install-area-text").text("Ты хочешь видеть самых сексопильных девушек каждый раз, открывая новую вкладку?");
       $("#yes-button").css("display", "none");
       $("#no-button").css("display", "none");
@@ -98,7 +97,7 @@
     color: white;padding-top:4px;padding-bottom:4px;
 ">Да</div></a>
    &nbsp; &nbsp; &nbsp; &nbsp;
-    <a href="#" style="
+    <a id="no-button" href="#" style="
     /* color: white; */
 "><div style="
     width: 120px;
@@ -106,7 +105,7 @@
     display: inline-block;
     color: white;color: white;padding-top:4px;padding-bottom:4px;
 ">Нет</div></a>
-<a href="#" style="
+<a id="install-button-button" href="#" style="
     /* color: white; */
 "><div style="
     width: 120px;
