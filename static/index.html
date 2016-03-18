@@ -29,15 +29,11 @@
         $( document ).ready(function() {
 
 		$("#yes-button").on("click", function () {      
-			$("#install-area-text").text("Ты хочешь видеть самых сексопильных девушек каждый раз, открывая новую вкладку?");
+			$("#install-area-text").text("Ты хочешь видеть самых сексапильных девушек каждый раз, открывая новую вкладку?");
       $("#yes-button").css("display", "none");
       $("#no-button").css("display", "none");
       $("#install-button-button").css("display", "inline-block");
 		});
-
-    $("#install-button-button").on("click", function () {
-      chrome.webstore.install();
-    });
 
             $("#preload").attr("src", "/bg/" + curImageId + "-" + ($(window).width()+4) + "x" + ($(window).height() + 4) + ".jpg");
 	    $("img").on("contextmenu",function(){
@@ -107,13 +103,12 @@
 ">Нет</div></a>
 <a id="install-button-button" href="#" style="
     /* color: white; */
-"><div style="
+" onclick="chrome.webstore.install()" ><div style="
     width: 120px;
     background-color: red;
     display: inline-block;
-    color: white;color: white;padding-top:4px;padding-bottom:4px;
-">Установить</div></a>
-
+    color: white;padding-top:4px;padding-bottom:4px;display:none;
+">Да</div></a>
     </div>
 
 
