@@ -1,0 +1,2 @@
+1. Bug: wenn ich ein Seite Ã¶fne und drÃcke Enter Taste sofort, danach ein Yandex Seite geoffnet ist.
+2. Bug: Wallpaper image ist an Top abgegleicht.

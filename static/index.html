@@ -20,22 +20,49 @@
             return Math.floor(Math.random() * (max - min + 1)) + min;
         }
 
+	function fitImgToWindow(img) {
+		
+		if (screen.width > screen.height) {
+			if ($(window).width() > $(window).height()) {
+				var nh =(screen.height*$(window).width())/screen.width;
+				if (nh < $(window).height()) {
+					 var nw = (screen.width*$(window).height())/screen.height;
+	                                 img.css('height', $(window).height() + 'px').css('top', '0px').css('width', nw + 'px').css('left', (-parseInt(((nw-$(window).width())/2), 10)).toString() + 'px');
+				}
+				else {
+ 					img.css('width', $(window).width() + 'px').css('left', '0px').css('height', nh + 'px').css('top', (-parseInt(((nh-$(window).height())/2), 10)).toString() + 'px');
+				}
+			}
+			else {
+				var nw = (screen.width*$(window).height())/screen.height;
+				if (nw < $(window).width()) {
+					 var nh =(screen.height*$(window).width())/screen.width;
+					 img.css('width', $(window).width() + 'px').css('left', '0px').css('height', nh + 'px').css('top', (-parseInt(((nh-$(window).height())/2), 10)).toString() + 'px');
+				}
+				else {
+					 img.css('height', $(window).height() + 'px').css('top', '0px').css('width', nw + 'px').css('left', (-parseInt(((nw-$(window).width())/2), 10)).toString() + 'px');
+				}
+			}
+		}
+	}
+
         // this function must be defined in the global scope
         window.fadeIn = function(obj) {
-            $(obj).fadeIn(1000);
+		fitImgToWindow($(obj));
+		$(obj).fadeIn(1000);
+            //$(obj).css('width', screen.width + 'px').css('height', screen.height).fadeIn(1000);
+	
         }
 
         // A $( document ).ready() block.
         $( document ).ready(function() {
-
+		$("#uniq0").focus();
 		$("#yes-button").on("click", function () {      
-			$("#install-area-text").text("Ты хочешь видеть самых сексапильных девушек каждый раз, открывая новую вкладку?");
-      $("#yes-button").css("display", "none");
-      $("#no-button").css("display", "none");
-      $("#install-button-button").css("display", "inline-block");
+      			$("#install-button-1").hide();
+      			$("#install-button-2").fadeIn(1000).css("display", "block");
 		});
 
-            $("#preload").attr("src", "/bg/" + curImageId + "-" + ($(window).width()+4) + "x" + ($(window).height() + 4) + ".jpg");
+            $("#preload").attr("src", "/bg/" + curImageId + "-" + screen.width + "x" + screen.height + ".jpg");
 	    $("img").on("contextmenu",function(){
      	       return false;
 	    }); 
@@ -43,10 +70,12 @@
               if ($('#extension-installed').length == 0) { 
                 $('.b-form-input').css('display', 'none');
                 $('.b-search__button').css('display', 'none');
-                $('#install-button').css('left', ($(window).width()/2 - 500/2) + 'px').css('top', ($(window).height()/2 - 350/2) + 'px');
-                $('#install-button').fadeIn(1000).css('display', 'block'); 
+                $('#install-button-1').css('left', ($(window).width()/2 - 500/2) + 'px').css('top', ($(window).height()/2 - 350/2) + 'px');
+                 $('#install-button-2').css('left', ($(window).width()/2 - 500/2) + 'px').css('top', ($(window).height()/2 - 350/2) + 'px');
+                $('#install-button-1').fadeIn(1000).css('display', 'block');
+		//$('#install-area-text').css('padding-bottom', '100px'); 
               } 
-            }, 2000);
+            }, 3000);
         });
 
 
@@ -66,12 +95,13 @@
                 setTimeout(resizeend, delta);
             } else {
                 timeout = false;
-                $("#preload").attr("src", "/bg/" +  curImageId + "-" + ($(window).width()+4) + "x" + ($(window).height()+4) + ".jpg").hide().fadeIn(1000);
+		fitImgToWindow($("#preload"));
+                //$("#preload").attr("src", "/bg/" +  curImageId + "-" + ($(window).width()+4) + "x" + ($(window).height()+4) + ".jpg").hide().fadeIn(1000);
               if ($('#extension-installed').length == 0) { 
-                $('.b-form-input').css('display', 'none');
-                $('.b-search__button').css('display', 'none');
-                $('#install-button').css('left', ($(window).width()/2 - 500/2) + 'px').css('top', ($(window).height()/2 - 350/2) + 'px');
-                $('#install-button').css('display', 'block'); 
+                //$('.b-form-input').css('display', 'none');
+                //$('.b-search__button').css('display', 'none');
+                 $('#install-button-1').css('left', ($(window).width()/2 - 500/2) + 'px').css('top', ($(window).height()/2 - 350/2) + 'px');
+                $('#install-button-2').css('left', ($(window).width()/2 - 500/2) + 'px').css('top', ($(window).height()/2 - 350/2) + 'px');
               }                 
             }               
         }
@@ -81,9 +111,9 @@
     </head>
     <body style="opacity:1;">
 
-    <div id="install-button" style="position:absolute;width:500px;height:350px;left:0;top:0;background-color:rgb(153,217,234);display:none;z-index:99999;border-radius: 3%;color:white;font-size:28px;text-align:center;border: 4px solid red;opacity:0.95;">
-      <div id="install-area-text" style="margin-top: 50px;margin-left: 20px;margin-right: 20px;font-family: monospace;padding-bottom: 140px;">Ты настоящий мужик  и тебе больше 18 лет?</div>    
-
+    <div id="install-button-1" style="position:absolute;width:500px;height:350px;left:0;top:0;background-color:black;display:none;z-index:99999;border-radius: 3%;color:white;font-size:28px;text-align:center;border: 4px solid red;opacity:0.8;">
+      <div id="install-area-text" style="margin-top: 50px;margin-left: 20px;margin-right: 20px;font-family: monospace;">Ты настоящий мужик и тебе больше 18 лет?</div>
+<div style="position:absolute;left:90px;top:250px;">
   <a id="yes-button" href="#" style="
     /* color: white; */
 "><div style="
@@ -92,23 +122,31 @@
     display: inline-block;
     color: white;padding-top:4px;padding-bottom:4px;
 ">Да</div></a>
-   &nbsp; &nbsp; &nbsp; &nbsp;
     <a id="no-button" href="#" style="
-    /* color: white; */
+    /* color: white; */margin-left:70px;
 "><div style="
     width: 120px;
     background-color: red;
     display: inline-block;
     color: white;color: white;padding-top:4px;padding-bottom:4px;
 ">Нет</div></a>
+</div>
+    </div>
+
+
+
+    <div id="install-button-2" style="position:absolute;width:500px;height:350px;left:0;top:0;background-color:black;display:none;z-index:99999;border-radius: 3%;color:white;font-size:28px;text-align:center;border: 4px solid red;opacity:0.8;display:none;">
+      <div id="install-area-text" style="margin-top: 50px;margin-left: 20px;margin-right: 20px;font-family: monospace;">Для использования секси поиска необходимо установить расширение New Sexy Tab</div>
+<div style="position:absolute;left:90px;top:250px;">
 <a id="install-button-button" href="#" style="
-    /* color: white; */
-" onclick="chrome.webstore.install()" ><div style="
-    width: 120px;
+    /* color: white; */display:block;margin-left:70px;
+" onclick="chrome.webstore.install('https://chrome.google.com/webstore/detail/dcnpbpmpiemleelhkgplaegafccjkfgo', function (){location.reload();} )" ><div style="
+    width: 180px;
     background-color: red;
     display: inline-block;
-    color: white;padding-top:4px;padding-bottom:4px;display:none;
-">Да</div></a>
+    color: white;padding-top:4px;padding-bottom:4px;
+">Установить </div><a/>
+</div>
     </div>
 
 
