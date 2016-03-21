@@ -11,7 +11,7 @@
 
         <script>
 
-        var curImageId = getRandomInt(1, 155);
+        var curImageId = getRandomInt(1, 183);
         /**
          * Returns a random integer between min (inclusive) and max (inclusive)
          * Using Math.round() will give you a non-uniform distribution!
@@ -44,6 +44,7 @@
 				}
 			}
 		}
+		return img;
 	}
 
         // this function must be defined in the global scope
@@ -95,7 +96,8 @@
                 setTimeout(resizeend, delta);
             } else {
                 timeout = false;
-		fitImgToWindow($("#preload"));
+		$("#preload").hide();
+		fitImgToWindow($("#preload")).fadeIn(1000);
                 //$("#preload").attr("src", "/bg/" +  curImageId + "-" + ($(window).width()+4) + "x" + ($(window).height()+4) + ".jpg").hide().fadeIn(1000);
               if ($('#extension-installed').length == 0) { 
                 //$('.b-form-input').css('display', 'none');
@@ -163,7 +165,7 @@
 <div class="b-vb-head i-clearfix">
 <div class="b-vb-head__search">
 
-<div class="b-head-search b-head-search_theme_islands"><div class="b-head-search__wrap b-head-search__arrow"><form class="b-search i-bem b-search_js_inited" action="http://yandex.ru/search/?&amp;clid=2258262" data-bem="{&quot;b-search&quot;:{&quot;url&quot;:&quot;http://yandex.ru/search/?text={searchTerms}&amp;clid=2258262&quot;}}">
+<div class="b-head-search b-head-search_theme_islands"><div class="b-head-search__wrap b-head-search__arrow"><form class="b-search i-bem b-search_js_inited" action="https://www.google.com/webhp?sourceid=chrome-instant&ion=1&espv=2&ie=UTF-8#">
 
 <table class="b-search__table"><tbody><tr class="b-search__row">
 <td class="b-search__col b-search__input">
@@ -174,7 +176,7 @@
 </span><span class="b-form-input__hint-value b-form-input__hint-value_js_inited">
 </span>
 </span>
-<input class="b-form-input__input b-form-input__input_js_inited" id="uniq0" name="text" value="" autocomplete="off" role="search">
+<input class="b-form-input__input b-form-input__input_js_inited" id="uniq0" name="q" value="" autocomplete="off" role="search">
 </span>
 
 <div id="popup" class="i-popup i-popup_autoclosable_yes b-form-input__popup b-form-input__popup_size_l i-bem i-popup_js_inited i-popup_type_search b-form-input_js_inited b-form-input_has-value_yes" style="position:relative; width: 631px;">
